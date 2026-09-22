@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home | The Brown Derbies</title>
+	<link rel=icon href=images/Derbies_Logo_Dark-09.png>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width = device-width, initial-scale = 1">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!--  FONT -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- For the tour carousel -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Owl carousel -->
+	<link rel="stylesheet" type="text/css" href="OwlCarousel2-2.3.4/dist/assets/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		.img-fluid {
+			max-width:100%;
+			height:100%;
+			display:block;
+		}
+	</style>
+    
+</head>
+    
+<body>
+
+	<script src="OwlCarousel2-2.3.4/docs/assets/vendors/jquery.min.js" type="text/javascript"></script>
+	<script src="OwlCarousel2-2.3.4/dist/owl.carousel.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		$('.owl-carousel').owlCarousel({
+		    loop:false,
+		    margin:10,
+		    nav:true,
+		    responsive:{
+		        0:{
+		            items:3
+		        },
+		        600:{
+		            items:6
+		        },
+		        1000:{
+		            items:8
+
+		        }
+		    }
+		});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function(){
+		  // Add smooth scrolling to all links
+		  $("a").on('click', function(event) {
+
+		    // Make sure this.hash has a value before overriding default behavior
+		    if (this.hash !== "") {
+		      // Prevent default anchor click behavior
+		      event.preventDefault();
+
+		      // Store hash
+		      var hash = this.hash;
+
+		      // Using jQuery's animate() method to add smooth page scroll
+		      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+		      $('html, body').animate({
+		        scrollTop: $(hash).offset().top
+		      }, 800, function(){
+		   
+		        // Add hash (#) to URL when done scrolling (default click behavior)
+		        window.location.hash = hash;
+		      });
+		    } // End if
+		  });
+		});
+	</script>
+
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">	
+    	<div class="container">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <div class="navbar-brand navbar-brand-centered">
+		      	<a href="">
+		      		<img src="images/Derby_Logo_White.png" loading="lazy" width="90px">
+		      	</a>
+		      </div>
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="navbar-brand-centered">
+		      <ul class="nav navbar-nav navbar-left">
+		        <li><a href="#section1">Home</a></li>
+		        <li><a href="#section2">About</a></li>
+		      	<li><a href="#section3">Events</a></li>
+		        <li><a href="#section4">Members</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#section5">Music</a></li>
+		        <li><a href="#section6">Tour</a></li>
+		        <li><a href="#section7">Audition</a></li>
+		        <li><a href="contact.html">Contact</a></li>		        
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+	</nav>
+	
+
+		<div class="container-fluid evenSection" id="music" style = "background-color: #3E2723; margin-top: 10vh;">
+			<h1 style = "color: aliceblue; font-size: xx-large;">Audition For Us!</h1>
+             <img src="images/tour/tour-cali/cali-1.png" loading="lazy" alt="Derbies Singing" style="display: block; width: 50vh; height: 50vh; margin-left: auto; margin-right: auto; object-fit: contain;">
+           
+			<p style = "color: aliceblue; font-size: large"> The Derbies hold auditions for Brown students at the beginning of every semester! The audition is comprised of three parts, scales, pitch matching, and a minute-long solo of your choice. Check our instagram to find a link to our audition spreadsheet! </p>
+
+                </a>
+
+
+		</div>
+
+	</div>
+
+    
+	
+	
+
+</body>
+</html>
+

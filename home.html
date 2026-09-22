@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Home | The Brown Derbies</title>
+    <link rel=icon href=images/Derbies_Logo_Dark-09.png>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script src="OwlCarousel2-2.3.4/docs/assets/vendors/jquery.min.js" type="text/javascript"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="OwlCarousel2-2.3.4/dist/assets/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .img-fluid {
+            max-width:100%;
+            height:100%;
+            display:block;
+        }
+    </style>
+    
+    <style>
+        @media (max-width: 1150px) { /* Affects screens where two-column layouts typically stack */
+            /* This rule targets a carousel container that immediately follows a tour description.
+              When these elements stack vertically on smaller screens, this CSS will apply.
+            */
+            .tour-desc + .carouselContainer {
+                margin-top: 0; /* Removes any existing top margin */
+                margin-bottom: 50px; /* Adds space below the carousel instead */
+            }
+        }
+        
+        /* --- Carousel Height Fix: Ensures consistent height for captions --- */
+        .carousel-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Example background for visibility */
+            color: #fff; /* Example text color */
+            padding: 10px 15px; /* Adjust padding as needed */
+            min-height: 80px; /* CRUCIAL FIX: Set a minimum height */
+            display: flex;
+            align-items: center; /* Vertically center content */
+            justify-content: center; /* Horizontally center content */
+            text-align: center;
+        }
+
+        .carousel-caption h3 {
+            margin: 0; /* Remove default margins from h3 inside caption */
+            line-height: 1.2; /* Adjust line-height for better text control */
+        }
+        
+        .carousel-indicators {
+            bottom: 85px; /* Sits just above the 80px min-height caption */
+        }
+    </style>
+    
+</head>
+    
+<body>
+    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $('.owl-carousel').owlCarousel({
+              loop:false,
+              margin:10,
+              nav:true,
+              lazyLoad: false,
+              responsive:{
+                  0:{
+                      items:3
+                  },
+                  600:{
+                      items:6
+                  },
+                  1000:{
+                      items:8
+                  }
+              }
+          });
+      
+          const headshotObserver = new PerformanceObserver((list) => {
+            list.getEntries().forEach((entry) => {
+              if (entry.initiatorType === 'img' && entry.name.includes('headshots')) {
+                const startTime = entry.startTime.toFixed(2);
+                const duration = entry.duration.toFixed(2);
+                const dataSize = (entry.decodedBodySize / 1024).toFixed(2);
+                console.log(`Image: '${entry.name}' | Start Time: ${startTime}ms | Total Time: ${duration}ms | Data Loaded: ${dataSize} KB`);
+              }
+            });
+          });
+      
+          headshotObserver.observe({
+            entryTypes: ['resource']
+          });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            // Specific logging for clicks on carousel arrows
+            $('.carousel-control').on('click', function(event) {
+                console.log("Carousel arrow clicked. Target: " + $(this).attr('href'));
+            });
+
+            // Modified smooth scrolling script
+            $("a").on('click', function(event) {
+                // If the click is on a carousel control, exit this function immediately 
+                // and let Bootstrap's default behavior handle it.
+                if ($(this).hasClass('carousel-control')) {
+                    return; 
+                }
+
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+    
+            // Function to log an element's details
+            function logElementDetails(context, $el, name, carouselId) {
+                if ($el.length) {
+                    console.log(`  ${context} ${name} (${$el.prop('tagName').toLowerCase()}#${$el.attr('id') || $el.index()}) in ${carouselId}:`);
+                    console.log(`    - Height: ${$el.height()}px`);
+                    if ($el.hasClass('item')) {
+                        const $img = $el.find('img');
+                        const $caption = $el.find('.carousel-caption');
+                        const captionOuterHeight = $caption.length ? $caption.outerHeight() : 0; // Ensure 0 if no caption
+                        console.log(`    - Image Src: ${$img.attr('src')}`);
+                        console.log(`    - Image Height: ${$img.height()}px`);
+                        console.log(`    - Caption Text: "${$caption.text().trim()}"`);
+                        console.log(`    - Caption OuterHeight: ${captionOuterHeight}px`);
+                    }
+                } else {
+                    console.log(`  ${context} ${name}: Not found or empty in ${carouselId}.`);
+                }
+            }
+
+            // Event listener for `slide.bs.carousel` (fires BEFORE the transition starts)
+            $('.carousel').on('slide.bs.carousel', function (e) {
+                const carouselId = $(this).attr('id');
+                const $carousel = $(this);
+                const $fromItem = $carousel.find('.item.active'); // Get the currently active item
+                const $toItem = $(e.relatedTarget); // Get the item that will become active
+
+                const fromIndex = $fromItem.index();
+                const toIndex = $toItem.index();
+
+                console.log(`\n=== Carousel '${carouselId}' - SLIDE EVENT (BEFORE TRANSITION) ===`);
+                console.log(`Transitioning from item index ${fromIndex} to item index ${toIndex}`);
+
+                // Log details of the item currently visible (about to leave)
+                logElementDetails('Current (leaving)', $fromItem, `Item ${fromIndex}`, carouselId);
+
+                // Log details of the item becoming active (about to enter)
+                logElementDetails('Next (entering)', $toItem, `Item ${toIndex}`, carouselId);
+
+                console.log('--- Bootstrap calculates the carousel-inner height based on the "Next (entering)" item\'s content. ---');
+            });
+    
+            // Event listener for `slid.bs.carousel` (fires AFTER the transition completes)
+            $('.carousel').on('slid.bs.carousel', function (e) {
+                const carouselId = $(this).attr('id');
+                const $carousel = $(this);
+                const $newActiveItem = $(e.relatedTarget); // Get the new active item
+                const toIndex = $newActiveItem.index();
+                const $currentInner = $carousel.find('.carousel-inner');
+
+                console.log(`\n=== Carousel '${carouselId}' - SLID EVENT (AFTER TRANSITION) ===`);
+                console.log(`Now active at item index ${toIndex}`);
+
+                logElementDetails('New Active', $newActiveItem, `Item ${toIndex}`, carouselId);
+                logElementDetails('Parent', $currentInner, 'Carousel-Inner', carouselId);
+                logElementDetails('Overall', $carousel, 'Carousel', carouselId);
+                console.log('====================================================');
+            });
+
+            // Initial logging after document ready, before any sliding
+            const allCarousels = $('.carousel');
+            allCarousels.each(function() {
+                const carouselId = $(this).attr('id');
+                console.log(`\n=== Initial Carousel State (${carouselId}) ===`);
+                const $initialCarousel = $(this);
+                const $initialInner = $initialCarousel.find('.carousel-inner');
+                const $initialActiveItem = $initialInner.find('.item.active');
+
+                logElementDetails('Overall', $initialCarousel, 'Carousel', carouselId);
+                logElementDetails('Parent', $initialInner, 'Carousel-Inner', carouselId);
+                logElementDetails('Active', $initialActiveItem, 'Item', carouselId);
+                console.log('==============================================');
+            });
+        });
+    </script>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">  
+        <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <div class="navbar-brand navbar-brand-centered">
+                <a href="">
+                    <img src="images/Derby_Logo_White.png" loading="lazy" width="90px">
+                </a>
+              </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-brand-centered">
+              <ul class="nav navbar-nav navbar-left">
+                <li><a href="#section1">Home</a></li>
+                <li><a href="#section2">About</a></li>
+                <li><a href="#section3">Events</a></li>
+                <li><a href="#section4">Members</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#section5">Music</a></li>
+                <li><a href="#section6">Tour</a></li>
+                <li><a href="#section7">Audition</a></li>
+                <li><a href="contact.html">Contact</a></li>             
+              </ul>
+            </div></div></nav>
+
+    <div class="container-fluid" id="picAndTitle">
+        <a id="section1"></a>
+        
+
+        <div class="image-overlay"> </div>
+
+        <div class="container" id="title">
+            
+            <h2> The</h2> <h1>Brown Derbies</h1>
+            <form method="get" action="contact.html">
+                <button type="submit">BOOK US</button>
+            </form>
+
+        </div>  
+
+    </div>
+
+    <div class="container-fluid oddSection" id="schedule">
+    <a id="section2"></a>
+
+        
+        <div class="section">
+
+            <h1> The History of the Hat N' Vest</h1>
+
+            <p>
+            Since 1982, The Brown Derbies have graced the time-honored walls of Brown University in Providence, RI. From Baton Rouge to Beijing, from San Francisco to Switzerland, from Wayland Arch to the White House- the Derbies have established a renowned international, domestic, and on-campus presence since our founding.
+            </p>
+
+            <p>             
+            The oldest <em>uninterrupted</em> tenor-through-bass a cappella group on campus, the Derbies are known for our energetic performances, expert musicianship, and unique sound. We sing tunes ranging from 80s hits to modern pop, entertaining a wide variety of audiences united by a common love for Beyonce.
+            </p>
+
+            <section id=social-media>
+                
+                <a href="https://www.facebook.com/brownderbies/" class="fa fa-facebook fa-2x"> </a>
+                <a href="https://twitter.com/brownderbies?lang=en" class="fa fa-twitter fa-2x"></a>
+                <a href="https://www.instagram.com/brownderbies/" class="fa fa-instagram fa-2x"> </a>
+                <a href="https://www.youtube.com/channel/UCj7UZy4pe6tnbb-ycDGDbZg" class="fa fa-youtube-play fa-2x"> </a>
+                <a href="https://open.spotify.com/artist/73iqvAwA4IpSoU4hJhNWq5" class="fa fa-spotify fa-2x"></a>
+                <a href="https://itunes.apple.com/us/artist/the-brown-derbies/4165970" class="fa fa-music fa-2x"> </a>
+                
+            </section> 
+
+            
+            </div>
+
+    </div>
+
+    
+    <div class="container-fluid evenSection" id="schedule" style = "background-color: #5E1108;">
+    <a id="section3"></a>
+        
+
+        <div class="section">
+            <h1> New Album: Hat's Off!</h1>
+
+            <p> The wait is over. Our BRAND NEW ALBUM <em>Hat's Off</em> is available now!!! The Derbies have been 
+                working tirelessly to bring this project to your ears and we can't wait for you to finally listen. 
+                The Album is now availalbe to stream on 
+                <a href="https://open.spotify.com/album/6sFqlLwu9RMakrVKc4KNQA">
+                    <span style="color: #ffbab3">Spotify</span></a> and 
+                    <a href="https://music.apple.com/us/album/hats-off/1781702205">
+                        <span style="color: #ffbab3">Apple Music</span></a>! 
+				<i>CUFF IT</i>, one of the tracks on Hat's Off was runner up in the 2025 Contemporary A Capella Society awards 
+				for best funk song of the year. Give it a listen!
+
+			</p>
+
+            <a href="https://li.sten.to/brownderbieshatsoff" target="_blank">
+                <img src="images/albumcovers/HatsOff.png" alt="Hat's Off Album Cover" style="display: block; width: 50vh; height: 50vh; margin-left: auto; margin-right: auto; object-fit: contain;">
+            </a>
+
+
+        </div>
+
+    </div>
+
+    
+    <div class="container-fluid oddSection" id="members">
+    <a id="section4"></a>
+        
+
+        <div class="section">
+            <h1> Who Are We?</h1>
+
+            <p> Friends, colleagues, <em>Lovers In Rome</em>, the Derbies are more than just pretty faces...</p>
+
+
+            <div id="member-slider-wrapper">
+                <div class="owl-carousel owl-theme">
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/xavier-min.webp">
+                        <h4>Xavier Dargan '26</h4>
+                        <h4>Derby #189</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/ben-min.webp">
+                        <h4>Benjamin Bradley '26</h4>
+                        <h4>Derby #190</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/mikai-min.webp">
+                        <h4>Mikai Spencer '26</h4>
+                        <h4>Derby #191</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/grant-min.webp">
+                        <h4>Grant Weihs '27</h4>
+                        <h4>Derby #194</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/rohan-min.webp">
+                        <h4>Rohan Menon '27</h4>
+                        <h4>Derby #195</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/bruce-min.webp">
+                        <h4>Bruce Yanovitch '27</h4>
+                        <h4>Derby #196</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/vivek-min.webp">
+                        <h4>Vivek Pall-Pareek '27</h4>
+                        <h4>Derby #197</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/jake-min.webp">
+                        <h4>Jake Delesky '27</h4>
+                        <h4>Derby #198</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2024/daniel-min.webp">
+                        <h4>Daniel Ma '27</h4>
+                        <h4>Derby #199</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2025/owen.webp">
+                        <h4>Owen Vaccaro '28</h4>
+                        <h4>Derby #200</h4>
+                    </div>
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2025/noam.webp">
+                        <h4>Noam Medjuck-Bruckner '28</h4>
+                        <h4>Derby #202</h4>
+                    </div>   
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2025/miles.webp">
+                        <h4>Miles Kaludzinski '28</h4>
+                        <h4>Derby #203</h4>
+                    </div>            
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2025/derin.webp">
+                        <h4>Derin Gurses '29</h4>
+                        <h4>Derby #204</h4>
+                    </div>         
+                    <div class="item">
+                        <img class="headshot" src="images/headshots_2025/isaac.webp">
+                        <h4>Isaac Kho '29</h4>
+                        <h4>Derby #205</h4>
+                    </div>            
+
+                </div>
+                
+            </div>
+            
+            <form method="get" action="underconstruction.html">
+                <button type="submit" id="member-button">READ OUR BIOS</button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="container-fluid evenSection" id="music" style = "background-color: #3E2723;">
+    <a id="section5"></a>
+
+        <div class="old-albums" id="old-albums-left">
+            <img src="images/albumcovers/unaccfor.png">
+            <img src="images/albumcovers/derbyhaus.png">
+            <img src="images/albumcovers/niceguys.jpg">
+            <img src="images/albumcovers/ridinderb.png">
+        </div>
+        <div class="old-albums" id="old-albums-left"></div>
+
+
+        <div class="old-albums" id="old-albums-right">
+            <img src="images/albumcovers/jericho.png">
+            <img src="images/albumcovers/nightcap.png">
+            <img src="images/albumcovers/hattrick.png">
+            <img src="images/albumcovers/talkderby.png">
+        </div>
+        <div class="old-albums" id="old-albums-right"></div>
+
+
+        <div class="section music-section">
+            
+
+            <h1> A Lil' Fun For Your Ears</h1>
+
+
+
+            <div id="music-wrapper"> 
+
+                <div id="spotify-wrapper">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/6sFqlLwu9RMakrVKc4KNQA?utm_source=generator" width="300" height="380" frameBorder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+        
+
+                <div id="musc-desc-wrapper">
+                    
+                    <p> 
+                    The Brown Derbies enjoy a rich history in music and performance.  We have recorded sixteen studio albums, 
+                    eight of which are available on Spotify and Apple Music.  Through engaging and lively performances, we have 
+                    redefined traditional perceptions of a cappella and carry a diverse repertoire that enables us to perform for 
+                    a wide variety of audiences and settings.
+
+                    <br> <br> 
+                    In December 2024, we released our latest album, <em>Hat's Off</em>.  Check it out on Spotify and Apple Music. 
+                    If you like this one, be sure to listen to our other albums like <em>To Be Determined</em> with our BOCA 2020 
+                    nominated track Happier!
+                    </p>
+
+                    <div id="musc-link-wrapper" style = "background-color: #4E342E;">
+                        
+                        <div class="social-media2">
+                            <a href="https://open.spotify.com/artist/73iqvAwA4IpSoU4hJhNWq5" class="fa fa-spotify fa-2x"></a>
+                            <a href="https://itunes.apple.com/us/artist/the-brown-derbies/4165970" class="fa fa-music fa-2x"> </a>
+                            <a href="https://www.youtube.com/channel/UCj7UZy4pe6tnbb-ycDGDbZg" class="fa fa-youtube-play fa-2x"> </a>
+                        </div>
+                    
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+        
+    </div>
+
+    <div class="container-fluid oddSection" id="tour">
+    <a id="section6"></a>
+        
+        <div class="section">
+
+            <h1>Tour The World</h1>
+
+            <p> Every year during winter recess, the Derbies migrate from Providence to share music, perform workshops, and engage with audiences worldwide.  Annually alternating between domestic and international tours, the Derbies have visited California, Louisiana, and Texas in the United States, as well as China, Switzerland, Great Britain, and Spain abroad in recent years.  The Derbies especially love to bring a cappella to those who have never before experienced it.  We provide an engaging experience for our tour audiences reflective of our excitement to sing around the world.
+            </p>
+
+            <div class="tour-wrapper">
+                <div class="inner-tour">
+
+                    <div class="tour-desc">
+                        
+                        <h2> Tour 2025: Japan & Singapore</h2>
+
+                        <p>
+                            One of our most exciting tours yet- we spent 10 unforgettable days performing and exploring in Singapore and Japan! 
+                            From vibrant hawker stalls and the stunning Marina Bay Sands in Singapore to the neon-lit streets of Shinjuku and the 
+                            beautiful Senso-Ji Temple in Tokyo, the trip was a whirlwind of adventure, discovery, and unforgettable performances. 
+                            We sang for, and alongside, students at Nishimachi and St. Mary's International Schools, hosted Q&As, and shared a 
+                            special show for alumni, friends, and family living abroad. Whether over late-night ramen or under the towering Tokyo 
+                            Skytree, the journey was an incredible opportunity to connect with each other and with our global community.
+                       </p>
+                    </div>
+
+                    <div class="container carouselContainer">
+      
+                        <div id="myCarousel7" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel7" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel7" data-slide-to="1"></li>
+                              <li data-target="#myCarousel7" data-slide-to="2"></li>
+                              <li data-target="#myCarousel7" data-slide-to="3"></li>
+                              <li data-target="#myCarousel7" data-slide-to="4"></li>
+                              </ol>
+
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="images/tour/tour-japan/japan4.webp" alt="Tokyo">
+                                    <div class="carousel-caption">
+                                      <h3> Tokyo </h3>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <img src="images/tour/tour-japan/japan2.webp" alt="A">
+                                    <div class="carousel-caption">
+                                      <h3> </h3>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <img src="images/tour/tour-japan/japan3.webp" alt="B">
+                                    <div class="carousel-caption">
+                                      <h3> </h3>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <img src="images/tour/tour-japan/japan1.webp" alt="Singapore">
+                                    <div class="carousel-caption">
+                                      <h3> Singapore </h3>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <img src="images/tour/tour-japan/japan5.webp" alt="C">
+                                    <div class="carousel-caption">
+                                      <h3> </h3>
+                                    </div>
+                                </div>
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel7" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel7" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="inner-tour">
+
+                    <div class="container carouselContainer">
+      
+                        <div id="myCarousel6" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel6" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel6" data-slide-to="1"></li>
+                              <li data-target="#myCarousel6" data-slide-to="2"></li>
+                              <li data-target="#myCarousel6" data-slide-to="3"></li>
+                              <li data-target="#myCarousel6" data-slide-to="4"></li>
+                              </ol>
+
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="images/tour/tour-europe-two/europe-two-5.webp" alt="London" style="width:100%;">
+                                    <div class="carousel-caption">
+                                      <h3> London </h3>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                <img src="images/tour/tour-europe-two/europe-two-1.webp" alt="Paris" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Paris </h3>
+                                </div>
+                                </div>
+                                
+                                <div class="item">
+                                <img src="images/tour/tour-europe-two/europe-two-2.webp" alt="Versailles" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Versailles </h3>
+                                </div>
+                              </div>
+
+
+                              <div class="item">
+                                <img src="images/tour/tour-europe-two/europe-two-3.webp" alt="Royal Holloway" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Royal Holloway </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-europe-two/europe-two-4.webp" alt="Sacre-Coeur" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Sacre-Coeur </h3>
+                                </div>
+                              </div>
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel6" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel6" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="tour-desc">
+                        
+                        <h2> Tour 2024: England & France</h2>
+
+                        <p>
+                          The Derbies undertook a tour de force second consecutive international tour splitting two weeks between London and Paris and in the process showing the ropes of tour to the largest
+                          freshman class in the history of the group! We enjoyed beautiful strolls across London's Golden Jubilee to get a world class view of the skyline followed by a visit to Deans Yard, 
+                          former school to one of our very own! We spent a evening teaching music to and performing with Royal Holloway's Absolute Harmony and later spent a evening with The Imperielles from 
+                          Imperial College London. After an incredible performance for the Brown Club of the UK we sped through the chunnel to soak in so many incredibly gorgeous sites: Louvre to Sacre-Coeur, 
+                          L'Arche de Triomphe to L'Tour Eiffel, all ending in a full day at the Palais de Versailles.
+                       </p>
+                    </div>
+
+                </div>
+
+                
+                <div class="inner-tour">
+
+                    <div class="tour-desc">
+                        
+                        <h2> Tour 2023: Spain</h2>
+
+                        <p>
+                          This year, the Derbies toured Spain! Starting in Madrid, we found ourselves getting lost wandering the city, from the bright lights of Gran Via to the stately Plaza Mayor. 
+                          As artists ourselves, we couldn't help but visit the Prado and stroll in Parque Retiro to watch all the amazing street performers! After a day trip to the old city of Toledo,
+                          we then moved on to Barcelona. There we had a great time performing for the American School of Barcelona, Craft Barcelona, and the Brown Club of Spain. When we weren't performing
+                          we took in goregouse sights like the Sagrada Familia, Casa Batllo, and the entrancing Gothic Quarter. However, the true beauty was in the classic Derby memories
+                          we made along the way... and the tapas!
+                       </p>
+                    </div>
+
+                    <div class="container carouselContainer">
+      
+                        <div id="myCarousel2" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel2" data-slide-to="1"></li>
+                              <li data-target="#myCarousel2" data-slide-to="2"></li>
+                              <li data-target="#myCarousel2" data-slide-to="3"></li>
+                              <li data-target="#myCarousel2" data-slide-to="4"></li>
+                              </ol>
+
+                            <div class="carousel-inner">
+
+                                <div class="item">
+                                <img src="images/tour/tour-spain/spain3.webp" alt="Toledo" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Toledo </h3>
+                                </div>
+                                </div>
+                                
+                                <div class="item">
+                                <img src="images/tour/tour-spain/spain1.webp" alt="Madrid" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Madrid </h3>
+                                </div>
+                              </div>
+
+
+                              <div class="item">
+                                <img src="images/tour/tour-spain/spain5.webp" alt="Toledo" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Toledo </h3>
+                                </div>
+                              </div>
+
+                              <div class="item active">
+                                <img src="images/tour/tour-spain/spain7.webp" alt="Barcelona" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Barcelona </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-spain/spain6.webp" alt="Lisbon" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3></h3>
+                                </div>
+                              </div>
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel2" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                          
+                <div class="inner-tour">
+                    <div class="container carouselContainer">
+          
+                        <div id="myCarousel5" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel5" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel5" data-slide-to="1"></li>
+                              <li data-target="#myCarousel5" data-slide-to="2"></li>
+                              <li data-target="#myCarousel5" data-slide-to="3"></li>
+                              <li data-target="#myCarousel5" data-slide-to="4"></li>
+                            </ol>
+
+                            <div class="carousel-inner"">
+
+                              <div class="item active">
+                                <img src="images/tour/tour-cali/cali-1.webp" alt="San Francisco" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> San Francisco, CA </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-cali/cali-2.webp" alt="Pacifica" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Pacifica, CA </h3>
+                                </div>
+                              </div>
+                            
+                              <div class="item">
+                                <img src="images/tour/tour-cali/cali-3.webp" alt="San Francisco" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> San Francisco, CA </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-cali/cali-4.webp" alt="San Francisco" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> San Francisco, CA </h3>
+                                </div>
+                              </div>
+                                                             
+                              <div class="item">
+                                <img src="images/tour/tour-cali/cali-5.webp" alt="Los Angeles" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Los Angeles, CA </h3>
+                                </div>
+                              </div>
+                           
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel5" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel5" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+
+
+                    </div>
+
+                    <div class="tour-desc">
+                        
+                        <h2> Tour 2022: California</h2>
+
+                        <p>
+                          Our triumphant return to touring swept the Derbies off to California! Our adventures brought us to San Francisco where we led a workshop for Lick-Wilmerding High School's vocal ensemble. We even had the chance to connect with several beloved Derby alumni at the Outer Sunset Farmer's Market. After gawking at the panoramic views on top of Twin Peaks and scouring for dapper vintage jackets in the Haight-Ashbury neighborhood, we headed off to Los Angeles! UCLA's campus welcomed us with open arms, where we held a magical backyard concert with the incredible Awaken a Cappella. After two years of virtual Derby shenanigans, we were so grateful to be back on the road.
+                       </p>
+                    </div>
+                </div>
+                              
+          
+                                          
+                <div class="inner-tour">
+
+                    <div class="tour-desc" id="a">
+                        
+                        <h2> Tour 2020: Italy & Switzerland</h2>
+
+                        <p>
+                            On our last pre-lockdown tour, the Derbies took a trip to Italy and Switzerland. We first stopped in Rome, where we spent time taking in breathtaking sites of the ancient ruins, singing for schools, performing at a law firm, and eating delicious food. We even got the chance to be featured on Italian TV! Next we traveled to Florence, where we visited the Uffizi, the Duomo, and enjoyed the lively nightlife the city has to offer. Finally, we ended our trip in the beautiful city of Leysin, where our friends at the Leysin American School hosted us for another workshop.
+                        </p>
+                    </div>
+
+                    <div class="container carouselContainer" id="b">
+      
+                        <div id="myCarousel4" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel4" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel4" data-slide-to="1"></li>
+                              <li data-target="#myCarousel4" data-slide-to="2"></li>
+                              <li data-target="#myCarousel4" data-slide-to="3"></li>
+                              <li data-target="#myCarousel4" data-slide-to="4"></li>
+
+                            </ol>
+
+                            <div class="carousel-inner">
+
+                              <div class="item">
+                                <img src="images/tour/tour-italy/italy-1.webp" alt="" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>  </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-italy/italy-2.webp" alt="" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>  </h3>
+                                </div>
+                              </div>
+                            
+                              <div class="item active">
+                                <img src="images/tour/tour-italy/italy-3.webp" alt="" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>  </h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-italy/italy-4.webp" alt="" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>  </h3>
+                                </div>
+                              </div>
+                                                             
+                              <div class="item">
+                                <img src="images/tour/tour-italy/italy-5.webp" alt="" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>  </h3>
+                                </div>
+                              </div>
+                               
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel4" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel4" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inner-tour">
+                    <div class="tour-desc">
+                        
+                        <h2> Tour 2016: China</h2>
+
+                        <p> In January 2016, we wrapped up our winter break with a tour of China! We started off in Beijing with a performance at the beautiful American Club of Beijing.  Between gigs we took in the country’s extensive history by visiting the Ming Tombs, Tiananmen Square, and of course, the Great Wall of China!  After a high-speed overnight train to Shanghai, we had an amazing time singing for Qibao Dwight High School and Shanghai American School, while taking in the city's nightlife and many, many pork buns.
+                        </p>
+
+                    </div>
+                    <div class="container carouselContainer">
+      
+                        <div id="myCarousel3" class="carousel slide " data-ride="carousel">
+                        <ol class="carousel-indicators">
+                              <li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
+                              <li data-target="#myCarousel3" data-slide-to="1"></li>
+                              <li data-target="#myCarousel3" data-slide-to="2"></li>
+                              <li data-target="#myCarousel3" data-slide-to="3"></li>
+                            </ol>
+ 
+                            <div class="carousel-inner"">
+
+                            
+                              <div class="item">
+                                <img src="images/tour/tour-china/china22.webp" alt="Shanghai" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3>Shanghai</h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-china/china11.webp" alt="Beijing" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Beijing - Great Wall of China </h3>
+                                </div>
+                              </div>
+
+                            
+                              <div class="item active">
+                                <img src="images/tour/tour-china/china33.webp" alt="Shanghai" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Shanghai</h3>
+                                </div>
+                              </div>
+
+                              <div class="item">
+                                <img src="images/tour/tour-china/china44.webp" alt="Beijing" style="width:100%;">
+                                <div class="carousel-caption">
+                                  <h3> Beijing</h3>
+                                </div>
+                              </div>
+                          
+                            </div>
+
+                            <a class="left carousel-control" href="#myCarousel3" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel3" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+
+                
+            </div>
+
+            
+            
+        </div>
+        
+
+    </div>
+
+
+    <div class="container-fluid evenSection" id="auditions" style = "background-color: #3E2723;">
+    <a id="section7"></a>
+        
+
+        <div class="section">
+            <h1> Interested in Joining Us?</h1>
+
+            <form method="get" action="audition.html">
+                <button type="submit">LEARN ABOUT AUDITIONS</button>
+            </form>
+        </div>
+
+
+    </div>
+
+
+    <div class="container-fluid oddSection" id="contact">
+
+        <div class="image-overlay2">
+            
+        </div>
+
+        <div class="section contactTitle">
+
+            <h5> The Derbies absolutely love performing - especially when there's a cheese platter involved.</h5>
+
+            <form method="get" action="contact.html">
+                <button type="submit">BOOK US</button>
+            </form>
+
+            <h5> Visit the link above if you're interested in having us sing for your event!</h5>
+            
+        </div>
+
+    </div>
+
+	<div class="container-fluid evenSection" id="schedule" style = "background-color: #3E2723;">
+		<a id="section3"></a>
+			
+	
+			<div class="section">
+				<p> The Brown Derbies were recognized on Varsity 
+					Vocal's 2020 Edition of Best of College A Capella for our track, <em>Happier</em>- 
+					the culmination of hours upon hours of hard work with arranger Amit 
+					Chakrabarti '21 and soloist Michael Saracco '21 at the forefront. </p>
+	
+				
+				 <a href="https://varsityvocals.com/project/boca-2020/" target="_blank">
+					<img src="images/events/boca.jpg" alt="BOCA Cover" style="display: block; margin-left: auto; margin-right: auto; object-fit: contain;">
+				</a>
+	
+			</div>
+	
+	
+		</div>
+
+
+
+    <div class="container-fluid"  id="footer">
+
+
+        <div class="section">
+
+            <section class="social-media2 social-media3" >
+                
+                <a href="https://www.facebook.com/brownderbies/" class="fa fa-facebook fa-2x"> </a>
+                <a href="https://twitter.com/brownderbies?lang=en" class="fa fa-twitter fa-2x"></a>
+                <a href="https://www.instagram.com/brownderbies/" class="fa fa-instagram fa-2x"> </a>
+                <a href="https://www.youtube.com/channel/UCj7UZy4pe6tnbb-ycDGDbZg" class="fa fa-youtube-play fa-2x"> </a>
+                <a href="https://open.spotify.com/artist/73iqvAwA4IpSoU4hJhNWq5" class="fa fa-spotify fa-2x"></a>
+                <a href="https://itunes.apple.com/us/artist/the-brown-derbies/4165970" class="fa fa-music fa-2x"> </a>
+                    
+            </section>
+        </div>
+
+        <div class="section">
+            
+            <div id="copyright">
+            © 2022, The Brown Derbies. All Rights Reserved.
+            </div>
+
+
+        </div>
+
+        
+    </div>
+
+
+
+    
+
+</body>
+</html>
